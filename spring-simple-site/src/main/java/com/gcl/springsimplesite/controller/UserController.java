@@ -1,6 +1,6 @@
 package com.gcl.springsimplesite.controller;
 
-import com.gcl.springsimplesite.dao.entity.User;
+import com.gcl.springsimplesite.dao.entity.UserEntity;
 import com.gcl.springsimplesite.service.UserService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,9 +25,9 @@ public class UserController {
         return "register";
     }
     @PostMapping("/register")
-    public String register(User user) {
-        log.info("register:" + user.getPassword() + "," + user.getUsername());
-        userService.register(user);
+    public String register(UserEntity userEntity) {
+        log.info("register:" + userEntity.getPassword() + "," + userEntity.getUsername());
+        userService.register(userEntity);
         return "redirect:/login";
     }
 }

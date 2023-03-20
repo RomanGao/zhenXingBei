@@ -14,7 +14,7 @@ import java.util.Collection;
 
 @TableName("T_USER")
 @Data
-public class User implements UserDetails {
+public class UserEntity implements UserDetails {
 
     @TableId(value = "ID", type = IdType.AUTO)
     private Long id;

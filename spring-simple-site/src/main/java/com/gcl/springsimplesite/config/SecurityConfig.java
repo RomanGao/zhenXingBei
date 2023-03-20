@@ -11,12 +11,14 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.AuthenticationFailureHandler;
+import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
+import org.springframework.security.web.authentication.SavedRequestAwareAuthenticationSuccessHandler;
+import org.springframework.security.web.authentication.SimpleUrlAuthenticationFailureHandler;
 
 @Configuration
 public class SecurityConfig{
 
-    @Autowired
-    private UserDetailsService userDetailsService;
 
     @Autowired
     private PasswordEncoder passwordEncoder;
@@ -25,34 +27,28 @@ public class SecurityConfig{
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
-                .authorizeHttpRequests((auth)-> {
-                    try {
-                        auth
-                        .requestMatchers(HttpMethod.POST, "/login").permitAll()
-                        .anyRequest().authenticated()
-                        .and()
-                        .formLogin()
-                                .loginPage("/login")
-                                .usernameParameter("username")
-                                .passwordParameter("password")
-                                .defaultSuccessUrl("/index")
-                        .permitAll()
-                        .and()
-                        .logout()
-                        .permitAll();
-                    } catch (Exception e) {
-                        throw new RuntimeException(e);
-                    }
-                });
+                .authorizeHttpRequests()
+                .anyRequest()
+                .authenticated()
+                .and()
+                .formLogin()
+                .loginPage("/login")
+                .defaultSuccessUrl("/index")
+                .permitAll()
+                .and()
+                .logout()
+                .logoutUrl("/logout");
         return http.build();
     }
 
     @Bean
-    public AuthenticationManager authenticationManager(HttpSecurity httpSecurity) throws Exception {
-        return httpSecurity.getSharedObject(AuthenticationManagerBuilder.class)
-                .userDetailsService(userDetailsService)
-                .passwordEncoder(passwordEncoder)
-                .and().build();
+    AuthenticationSuccessHandler successHandler() {
+        return new SavedRequestAwareAuthenticationSuccessHandler();
+    }
+
+    @Bean
+    AuthenticationFailureHandler failureHandler() {
+        return new SimpleUrlAuthenticationFailureHandler("/login?error");
     }
 
     @Bean
