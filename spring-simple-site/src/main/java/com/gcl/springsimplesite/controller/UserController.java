@@ -20,10 +20,16 @@ public class UserController {
         return "login";
     }
 
+    @PostMapping("/logout")
+    public String logout() {
+        return "logout success";
+    }
+
     @GetMapping("/register")
     public String register() {
         return "register";
     }
+
     @PostMapping("/register")
     public String register(UserEntity userEntity) {
         log.info("register:" + userEntity.getPassword() + "," + userEntity.getUsername());
