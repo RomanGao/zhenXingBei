@@ -1,0 +1,9 @@
+org\gaocl\demo\config\FailLogin.class
+org\gaocl\demo\dao\UserDao.class
+org\gaocl\demo\service\UserService.class
+org\gaocl\demo\Entity\MyUser.class
+org\gaocl\demo\config\CryptoConfig.class
+org\gaocl\demo\config\SucessLogin.class
+org\gaocl\demo\controller\UserController.class
+org\gaocl\demo\Application.class
+org\gaocl\demo\config\SecurityConfig.class

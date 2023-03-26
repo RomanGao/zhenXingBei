@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div style="margin-top: 100px; width: 100%">
+    <div style="margin: auto; width: 300px; text-align: center">
+        <h1 style="color: red;"> hello spring</h1>
+        <br/>
+        <form th:action="@{/logout}" method="post" style="margin-top: 100px">
+            <button type="submit" >退出</button>
+        </form>
+    </div>
+</div>
+
+</body>
+</html>
